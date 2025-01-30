@@ -19,8 +19,8 @@ This project demonstrates a vulnerability in a Flask web application that allows
 
 Clone the repository:
 ```bash
-git clone https://github.com/yourusername/SQL_Comment_Injection.git
-cd SQL_Comment_Injection
+git clone https://github.com/Tesnime19/sql_injection.git
+cd sql_injection
 ```
 Build and run the Docker container:
 ```bash
