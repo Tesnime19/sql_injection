@@ -32,35 +32,35 @@ def login():
     username = request.form['username']
     password = request.form['password']
 
-    # Construire la requête SQL vulnérable
+    # Build SQL queries vulnerability
     query = f"SELECT * FROM users WHERE username = '{username}' AND password = '{password}'"
     
-    # Logs pour déboguer
+    # Logs for debug
     print(f"Received username: {username}")
     print(f"Received password: {password}")
     print(f"Executing query: {query}")
     
-    # Exécuter la requête
+    # Execute the queries
     conn = sqlite3.connect('app/database.db')
     cursor = conn.cursor()
     cursor.execute(query)
     user = cursor.fetchone()
     conn.close()
 
-    # Log le résultat de la requête
+    # Log the queries of the request
     print(f"Result from query: {user}")
 
-    # Gestion des résultats
+    # Result
     if user:
-        # Vérifiez si la requête a été faite normalement ou via injection SQL
-        if username == user[1] and password == user[2]:  # Login légitime
+        # Check if the request was normal or if it was with SQL injection
+        if username == user[1] and password == user[2]:  # Login legit
             flash(f"Welcome {username}! You have successfully logged in.", "success")
             return render_template('real_dashboard.html', username=username)
-        else:  # Injection SQL détectée
+        else:  # Injection SQL detected
             flash("SQL Injection vulnerability exploited! You bypassed authentication.", "warning")
             return render_template('dashboard.html', username="Unknown (SQL Injected)")
     else:
-        # Échec d'authentification
+        # Fail to autentified
         flash("Login failed. Try again.", "danger")
         return redirect('/')
 
