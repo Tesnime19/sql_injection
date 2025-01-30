@@ -1,9 +1,67 @@
 <!DOCTYPE html>
-<html>
+<html lang="fr">
 <head>
-    <title>Dashboard</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard -  {{ username }}</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+        h1 {
+            color: #333;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            background: white;
+        }
+        th, td {
+            border: 1px solid black;
+            padding: 10px;
+            text-align: left;
+        }
+        th {
+            background-color: #3498db;
+            color: white;
+        }
+    </style>
 </head>
 <body>
-    <h1>Welcome, {{ username }}</h1>
+
+    <h1>Welcome, {{ username }} !</h1>
+    <h2>List of student's grades :</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Grade</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% set eleves = [
+                {"prenom": "Alice", "note": range(8, 20) | random },
+                {"prenom": "Bob", "note": range(8, 20) | random },
+                {"prenom": "Charlie", "note": range(8, 20) | random },
+                {"prenom": "David", "note": range(8, 20) | random },
+                {"prenom": "Emma", "note": range(8, 20) | random },
+                {"prenom": "Lucas", "note": range(8, 20) | random },
+                {"prenom": "Olivia", "note": range(8, 20) | random },
+                {"prenom": "Hugo", "note": range(8, 20) | random }
+            ] %}
+            
+            {% for eleve in eleves %}
+            <tr>
+                <td>{{ eleve.prenom }}</td>
+                <td>{{ eleve.note }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
 </body>
 </html>

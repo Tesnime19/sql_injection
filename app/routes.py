@@ -6,7 +6,7 @@ app.secret_key = 'supersecretkey'
 
 # Database setup (SQLite)
 def init_db():
-    conn = sqlite3.connect('app/database.db')
+    conn = sqlite3.connect('database.db')
     cursor = conn.cursor()
     cursor.execute('''
         CREATE TABLE IF NOT EXISTS users (
@@ -41,7 +41,7 @@ def login():
     print(f"Executing query: {query}")
     
     # Execute the queries
-    conn = sqlite3.connect('app/database.db')
+    conn = sqlite3.connect('database.db')
     cursor = conn.cursor()
     cursor.execute(query)
     user = cursor.fetchone()
@@ -52,17 +52,13 @@ def login():
 
     # Result
     if user:
-        # Check if the request was normal or if it was with SQL injection
-        if username == user[1] and password == user[2]:  # Login legit
-            flash(f"Welcome {username}! You have successfully logged in.", "success")
-            return render_template('real_dashboard.html', username=username)
-        else:  # Injection SQL detected
-            flash("SQL Injection vulnerability exploited! You bypassed authentication.", "warning")
-            return render_template('dashboard.html', username="Unknown (SQL Injected)")
+        flash(f"Welcome {username}! You have successfully logged in.", "success")
+        return render_template('real_dashboard.html', username=username)
     else:
-        # Fail to autentified
+    # Échec de l'authentification
         flash("Login failed. Try again.", "danger")
         return redirect('/')
+
 
 if __name__ == '__main__':
     init_db()
